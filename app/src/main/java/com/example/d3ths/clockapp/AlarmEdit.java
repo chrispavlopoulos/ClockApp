@@ -83,7 +83,6 @@ public class AlarmEdit extends Fragment{
         setTime.setText(time);
         setTime.setTypeface(sourceSans);
 
-
         return view;
 
     }
