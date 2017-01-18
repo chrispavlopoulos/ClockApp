@@ -2,10 +2,11 @@ package com.example.d3ths.clockapp;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.view.View;
+import android.os.Handler;
+import android.text.InputFilter;
+import android.util.Log;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,13 +22,13 @@ public class DialogEditText extends Dialog{
     public ImageView ok, cancel;
     public EditText input;
     String msg;
-    int inputLimit;
+    String pastText;
 
-    public DialogEditText(Activity a, String msg, int inputLimit) {
+    public DialogEditText(Activity a, String msg, String pastText) {
         super(a);
         this.c = a;
         this.msg = msg;
-        this.inputLimit = inputLimit;
+        this.pastText = pastText;
     }
 
     @Override
@@ -37,29 +38,13 @@ public class DialogEditText extends Dialog{
         setContentView(R.layout.dialog_edit_text);
         ((TextView)findViewById(R.id.alertTitle)).setText(msg);
         input = (EditText)findViewById(R.id.input);
-        input.setMaxLines(1);
+        input.setSingleLine();
+        input.setText(pastText);
+        input.setTextSize(20);
+        input.selectAll();
         input.getBackground().setColorFilter(c.getResources().getColor(R.color.orange), PorterDuff.Mode.SRC_IN);
         ok = (ImageView) findViewById(R.id.alertOkButton);
         cancel = (ImageView) findViewById(R.id.alertCancelButton);
-//        ok.setOnClickListener(this);
-//        cancel.setOnClickListener(this);
     }
-
-//    @Override
-//    public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.alertOkButton:
-//                changed = true;
-//                dismiss();
-//                break;
-//            case R.id.alertCancelButton:
-//                dismiss();
-//                break;
-//            default:
-//                break;
-//        }
-//        dismiss();
-//    }
-
 
 }

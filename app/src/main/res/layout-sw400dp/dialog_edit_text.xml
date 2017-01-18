@@ -21,8 +21,9 @@
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="81dp"
-        android:layout_marginStart="312dp"
+        android:layout_marginTop="83dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="5dp"
         android:src="@drawable/check_mark_orange"
         android:id="@+id/alertOkButton"
         android:text="Ok"/>
