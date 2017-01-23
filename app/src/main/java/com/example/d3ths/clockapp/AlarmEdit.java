@@ -57,7 +57,7 @@ public class AlarmEdit extends Fragment{
             @Override
             public void onClick(View view) {
                 ((InputMethodManager)getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-                final DialogEditText alert = new DialogEditText(getActivity(), "Alarm Name", alarmName.getText().toString());
+                final DialogEditText alert = new DialogEditText(getActivity(), "Alarm Name", alarm.name);
                 alert.show();
                 alert.setCanceledOnTouchOutside(false);
 
@@ -113,15 +113,7 @@ public class AlarmEdit extends Fragment{
         Typeface sourceSans = Typeface.createFromAsset(getActivity().getAssets(), "SourceSansProR.otf");
         RelativeLayout layoutContainer = (RelativeLayout)view.findViewById(R.id.container);
 
-        final TextView timeText = new TextView(getActivity());
-        LayoutParams lp1 = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        lp1.setMargins(marginStart, 0, 0, 0);
-        timeText.setLayoutParams(lp1);
-        timeText.setText("Time:");
-        timeText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
-        timeText.setTypeface(sourceSans);
-        layoutContainer.addView(timeText);
-
+        ((TextView)view.findViewById(R.id.timeText)).setTypeface(sourceSans);
 
         String time = "";
         time += alarm.hour + ":";
@@ -131,13 +123,44 @@ public class AlarmEdit extends Fragment{
         else time += "PM";
         TextView displayedTime = new TextView(getActivity());
         LayoutParams lp2 = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        lp2.setMargins(0, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, r.getDisplayMetrics()), 0);
+        lp2.setMargins(0, 0, (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, r.getDisplayMetrics()), 0);
         lp2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         displayedTime.setLayoutParams(lp2);
         displayedTime.setText(time);
         displayedTime.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
         displayedTime.setTypeface(sourceSans);
         layoutContainer.addView(displayedTime);
+
+
+        ((TextView)view.findViewById(R.id.ringtoneText)).setTypeface(sourceSans);
+
+        TextView setRingtone = (TextView)view.findViewById(R.id.setRingtone);
+        setRingtone.setTypeface(sourceSans);
+        setRingtone.setText(alarm.ringtone.substring(0, alarm.ringtone.length() - 4));
+
+        int letterSpacer = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 175, r.getDisplayMetrics());
+        String[] dotwLetters = {"M","T","W","TH","F", "S", "SU"};
+        for(int i = 0; i < dotwLetters.length; i++){
+            TextView l = new TextView(getActivity());
+            LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+            lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            lp.setMargins(0, (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 145, r.getDisplayMetrics()), letterSpacer, 0);
+            l.setLayoutParams(lp);
+            l.setTypeface(sourceSans);
+            l.setText(dotwLetters[i]);
+            l.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+            char onOff = alarm.daysOfTheWeek.charAt(i);
+            if(onOff == '0') l.setTextColor(getResources().getColor(R.color.greyish));
+            layoutContainer.addView(l);
+            if(i == 2 || i == 5){
+                letterSpacer -= (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, r.getDisplayMetrics());
+            }else if(i == 1){
+                letterSpacer -= (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, r.getDisplayMetrics());
+            }else
+                letterSpacer -= (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, r.getDisplayMetrics());
+        }
+
+
 
         return view;
 

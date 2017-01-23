@@ -17,7 +17,7 @@ public class Alarm {
         this.ampm = ampm;
         this.daysOfTheWeek = daysOfTheWeek;
         name = "My Alarm";
-        ringtone = "";
+        ringtone = "default.mp3";
     }
 
     public void setName(String name){

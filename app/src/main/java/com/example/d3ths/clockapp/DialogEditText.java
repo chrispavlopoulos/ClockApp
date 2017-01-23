@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Window;
 import android.widget.EditText;
@@ -42,6 +43,7 @@ public class DialogEditText extends Dialog{
         input.setText(pastText);
         input.setTextSize(20);
         input.selectAll();
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         input.getBackground().setColorFilter(c.getResources().getColor(R.color.orange), PorterDuff.Mode.SRC_IN);
         ok = (ImageView) findViewById(R.id.alertOkButton);
         cancel = (ImageView) findViewById(R.id.alertCancelButton);
