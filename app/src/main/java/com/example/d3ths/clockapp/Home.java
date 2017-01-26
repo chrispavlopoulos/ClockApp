@@ -37,7 +37,7 @@ import java.util.Locale;
  * Created by Chris on 8/30/2016.
  */
 public class Home extends AppCompatActivity implements SelectionHour.CallBacks, SelectionMinute.CallBacks, HomeContent.CallBacks,
-        SelectionAMPM.CallBacks, Alarms.Callbacks, Time.CallBacks, NewAlarm.Callbacks, AlarmEdit.Callbacks{
+        SelectionAMPM.CallBacks, Alarms.Callbacks, Time.CallBacks, AlarmNew.Callbacks, AlarmEdit.Callbacks, AlarmsCurrent.Callbacks{
 
     FragmentManager manager;
     ArrayList<Alarm> alarms = new ArrayList<>();
@@ -49,7 +49,8 @@ public class Home extends AppCompatActivity implements SelectionHour.CallBacks, 
     HomeContent homeContentPage;
     Alarms alarmsPage;
     Time timePage;
-    NewAlarm newAlarm;
+    AlarmsCurrent alarmsCurrent;
+    AlarmNew alarmNew;
     AlarmEdit alarmEdit;
     TextClock textClock;
     ImageView addaptableArrow;
@@ -79,11 +80,8 @@ public class Home extends AppCompatActivity implements SelectionHour.CallBacks, 
         fragTran.commit();
 
         otherScreens = manager.beginTransaction();
-        //otherScreens.add(R.id.placeholderContainer, new Alarms(), "alarmFrag");
         otherScreens.commit();
-
         alarmsPage = new Alarms();
-
         homeContentPage = new HomeContent();
 
 
@@ -138,11 +136,14 @@ public class Home extends AppCompatActivity implements SelectionHour.CallBacks, 
                 if(currentView.equals("homePage"))return;
 
                 switch(currentView){
-                    case "alarmPage":
+                    case "alarmsPage":
                         alarmsPage.goBack();
                         break;
+                    case "alarmsCurrentPage":
+                        alarmsCurrent.goBack();
+                        break;
                     case "newAlarmPage":
-                        newAlarm.goBack();
+                        alarmNew.goBack();
                         break;
                     case "alarmEditPage":
                         alarmEdit.goBack();
@@ -151,6 +152,7 @@ public class Home extends AppCompatActivity implements SelectionHour.CallBacks, 
                     case "timePage":
                         timePage.goBack();
                         break;
+
                 }
             }
         });
@@ -385,7 +387,7 @@ public class Home extends AppCompatActivity implements SelectionHour.CallBacks, 
     public void goToView(String view){
         currentView = view;
         switch (view){
-            case "alarmPage":
+            case "alarmsPage":
                 turnArrowLeft();
                 break;
             case "timePage":
@@ -401,14 +403,18 @@ public class Home extends AppCompatActivity implements SelectionHour.CallBacks, 
                 break;
             case "alarmFragment":
                 break;
-            case "timeFragment":
-                timePage = (Time) frag;
+            case "alarmsCurrentFrag":
+                alarmsCurrent = (AlarmsCurrent) frag;
                 break;
             case "newAlarmFrag":
-                newAlarm = (NewAlarm) frag;
+                alarmNew = (AlarmNew) frag;
                 break;
             case "alarmEditFrag":
                 alarmEdit = (AlarmEdit) frag;
+                break;
+
+            case "timeFragment":
+                timePage = (Time) frag;
                 break;
         }
     }
@@ -423,6 +429,12 @@ public class Home extends AppCompatActivity implements SelectionHour.CallBacks, 
     public void alarmGoToView(Fragment frag, String view){
         passFragment(frag);
         goToView(view);
+    }
+
+    //Current Alarms
+    @Override
+    public void leaveFromAlarmsCurrent(){
+        currentView = "alarmsPage";
     }
 
     //New Alarm
@@ -449,7 +461,7 @@ public class Home extends AppCompatActivity implements SelectionHour.CallBacks, 
         //Hour
         @Override
         public void passHour(int hr){
-            NewAlarm frag = (NewAlarm)
+            AlarmNew frag = (AlarmNew)
                     getSupportFragmentManager().findFragmentByTag("newAlarmFrag");
 
             frag.setHour(hr);
@@ -458,14 +470,14 @@ public class Home extends AppCompatActivity implements SelectionHour.CallBacks, 
         //Minute
         @Override
         public void passMinute(int min){
-            NewAlarm frag = (NewAlarm)
+            AlarmNew frag = (AlarmNew)
                     getSupportFragmentManager().findFragmentByTag("newAlarmFrag");
             frag.setMinute(min);
         }
         //AMPM
         @Override
         public void passAMPM(int ampm){
-            NewAlarm frag = (NewAlarm)
+            AlarmNew frag = (AlarmNew)
                     getSupportFragmentManager().findFragmentByTag("newAlarmFrag");
             frag.setAMPM(ampm);
         }
@@ -514,11 +526,16 @@ public class Home extends AppCompatActivity implements SelectionHour.CallBacks, 
         goToView(view);
         passFragment(frag);
     }
-
     @Override
     public void newAlarmReload(Alarm alarm){
-        newAlarm.setReloaded(alarm);
-
+        alarmNew.setReloaded(alarm);
+    }
+    @Override
+    public void alarmEditFinish(String view){
+        if(view.equals("newAlarmPage")){
+            currentView = "homePage";
+            turnArrowFromLeft();
+        }
     }
 
     //Time

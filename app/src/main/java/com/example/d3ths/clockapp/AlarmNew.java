@@ -1,6 +1,5 @@
 package com.example.d3ths.clockapp;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Typeface;
@@ -14,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -26,7 +24,7 @@ import java.util.ArrayList;
 /**
  * Created by Chris on 8/29/2016.
  */
-public class NewAlarm extends Fragment {
+public class AlarmNew extends Fragment {
     FragmentTransaction ft;
     public int hour = 1;
     public int minute = 0;
@@ -46,9 +44,8 @@ public class NewAlarm extends Fragment {
     boolean reloaded;
     Alarm tempAlarm;
 
-    private Button changeShit;
 
-    public NewAlarm() {
+    public AlarmNew() {
         hour = 1;
     }
     @Override
@@ -58,7 +55,7 @@ public class NewAlarm extends Fragment {
         dp142 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 142, r.getDisplayMetrics());
         dp184 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 184, r.getDisplayMetrics());
 
-        view = (RelativeLayout)inflater.inflate(R.layout.alarms_new_slider, container, false);
+        view = (RelativeLayout)inflater.inflate(R.layout.alarms_new, container, false);
 
         ft = getFragmentManager().beginTransaction();
         SelectionHour selectionHour = new SelectionHour();
@@ -319,8 +316,8 @@ public class NewAlarm extends Fragment {
     }
 
 
-    public static NewAlarm getInstance() {
-        NewAlarm f = new NewAlarm();
+    public static AlarmNew getInstance() {
+        AlarmNew f = new AlarmNew();
 
         return f;
     }

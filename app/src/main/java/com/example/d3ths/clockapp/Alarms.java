@@ -58,8 +58,22 @@ public class Alarms extends Fragment {
                 }
         );
 
-        final NewAlarm naws = new NewAlarm();
-        toNewAlarm = (View)view.findViewById(R.id.toNewAlarm);
+        final AlarmsCurrent alarmsCurrent = new AlarmsCurrent();
+        View toCurrentAlarms = (View)view.findViewById(R.id.toCurrentAlarms);
+        toCurrentAlarms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ft = getFragmentManager().beginTransaction();
+
+                ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+                ft.replace(R.id.container, alarmsCurrent, "alarmsCurrentFrag");
+                ft.commit();
+                callBack.alarmGoToView(alarmsCurrent, "alarmsCurrentPage");
+            }
+        });
+
+        final AlarmNew alarmNew = new AlarmNew();
+        toNewAlarm = (View)view.findViewById(R.id.toAlarmNew);
         toNewAlarm.setOnClickListener(
                 new TextView.OnClickListener(){
                     @Override
@@ -67,9 +81,9 @@ public class Alarms extends Fragment {
                         ft = getFragmentManager().beginTransaction();
 
                         ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
-                        ft.replace(R.id.container, naws, "newAlarmFrag");
+                        ft.replace(R.id.container, alarmNew, "newAlarmFrag");
                         ft.commit();
-                        callBack.alarmGoToView(naws, "newAlarmPage");
+                        callBack.alarmGoToView(alarmNew, "newAlarmPage");
                     }
                 }
         );

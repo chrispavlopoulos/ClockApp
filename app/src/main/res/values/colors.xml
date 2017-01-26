@@ -12,4 +12,5 @@
     <color name="greyer">#b7a8a8a8</color>
     <color name="grey">#b7636363</color>
     <color name="white">#ffffff</color>
+    <color name="whiteTaint">#f5f5f5</color>
 </resources>

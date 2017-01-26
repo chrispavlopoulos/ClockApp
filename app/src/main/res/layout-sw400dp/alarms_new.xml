@@ -312,12 +312,14 @@
             android:layout_below="@+id/checkSun"/>
 
         <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
             android:layout_marginTop="530dp"
             android:src="@drawable/next_arrow"
             android:id="@+id/nextArrow"
-            android:layout_marginStart="290dp"/>
+            android:layout_alignParentEnd="true"
+            android:paddingStart="0dp"
+            android:paddingEnd="25dp"/>
 
     </RelativeLayout>
 

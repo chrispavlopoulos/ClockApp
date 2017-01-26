@@ -1,14 +1,12 @@
 package com.example.d3ths.clockapp;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.text.InputType;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -17,10 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.RelativeLayout.LayoutParams;
+
+import java.util.ArrayList;
 
 
 /**
@@ -49,7 +49,7 @@ public class AlarmEdit extends Fragment{
             alarmName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
         }else if(name.length() >= 21){
             alarmName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
-            name = name.substring(0, 21) + "...";
+            name = name.substring(0, 20) + "...";
         }
         alarmName.setText(name);
 
@@ -160,7 +160,29 @@ public class AlarmEdit extends Fragment{
                 letterSpacer -= (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, r.getDisplayMetrics());
         }
 
+        AlarmEdit thisObj = this;
 
+        ((ImageView)view.findViewById(R.id.nextArrow)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                NotificationCompat.Builder builder =
+//                        new NotificationCompat.Builder(getContext())
+//                                .setSmallIcon(R.drawable.bell)
+//                                .setContentTitle("My notification")
+//                                .setContentText("Hello World!");
+//
+//                int id = 001;
+//
+//                NotificationManager notifyMgr = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+//                notifyMgr.notify(id, builder.build());
+                ft = getFragmentManager().beginTransaction();
+                ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                ft.replace(R.id.container, ((Home)getActivity()).homeContentPage);
+                ft.commit();
+                callBack.alarmEditFinish(lastView);
+            }
+        });
 
         return view;
 
@@ -172,13 +194,13 @@ public class AlarmEdit extends Fragment{
         ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
 
         if(tag.equals("newAlarmFrag")) {
-            ft.replace(R.id.container, (NewAlarm)lastFragment, "newAlarmFrag");
+            ft.replace(R.id.container, (AlarmNew)lastFragment, "newAlarmFrag");
             callBack.newAlarmReload(alarm);
         }else{
 
         }
         ft.commit();
-        callBack.returnFromEditAlarm((NewAlarm)lastFragment, lastView);
+        callBack.returnFromEditAlarm((AlarmNew)lastFragment, lastView);
     }
 
     public void setAlarm(Alarm alarm){
@@ -196,6 +218,7 @@ public class AlarmEdit extends Fragment{
     public interface Callbacks{
         public void returnFromEditAlarm(Fragment frag, String view);
         public void newAlarmReload(Alarm alarm);
+        public void alarmEditFinish(String view);
     }
 
     @Override

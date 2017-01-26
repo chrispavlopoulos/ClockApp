@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="350dp"
+    android:layout_height="130dp"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textSize="25sp"
+        android:maxLines="2"
+        android:id="@+id/alarmName"/>
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="83dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/edit_symbol_orange"
+        android:id="@+id/editAlarm"
+        android:text="Ok"/>
+
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="83dp"
+        android:layout_marginStart="5dp"
+        android:src="@drawable/cancel_button"
+        android:id="@+id/alertCancelButton"
+        android:text="Cancel"/>
+
+
+</RelativeLayout>

@@ -59,7 +59,7 @@ public class HomeContent extends Fragment{
                         ft.replace(R.id.container, alarmsPage, "alarmFragment");
                         ft.addToBackStack(null);
                         ft.commit();
-                        callBack.goToView("alarmPage");
+                        callBack.goToView("alarmsPage");
                         callBack.passFragment(alarmsPage);
                     }
                 }
