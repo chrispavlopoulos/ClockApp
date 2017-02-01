@@ -15,12 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.RelativeLayout.LayoutParams;
-
-import java.util.ArrayList;
 
 
 /**
@@ -37,9 +36,10 @@ public class AlarmEdit extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Resources r = getResources();
+        final TextView[] dotwViews = new TextView[7];
         int marginStart = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, r.getDisplayMetrics());
 
-        view = (RelativeLayout)inflater.inflate(R.layout.edit_alarm, container, false);
+        view = (RelativeLayout)inflater.inflate(R.layout.alarm_edit, container, false);
 
         final TextView alarmName = (TextView) view.findViewById(R.id.alarmName);
         String name = alarm.name;
@@ -52,6 +52,8 @@ public class AlarmEdit extends Fragment{
             name = name.substring(0, 20) + "...";
         }
         alarmName.setText(name);
+
+
 
         (view.findViewById(R.id.alarmNameSelector)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +112,35 @@ public class AlarmEdit extends Fragment{
 
             }
         });
+
+        view.findViewById(R.id.dotwTextSelector).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String[] arr = {"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"};
+                final DialogChecklist checklist = new DialogChecklist(getActivity(), "Days", arr, alarm.daysOfTheWeek);
+                checklist.show();
+                checklist.setCanceledOnTouchOutside(false);
+
+                checklist.ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String dotw = "";
+                        CheckBox[] checkBoxes = checklist.checkBoxes;
+                        for(int i = 0; i < checkBoxes.length; i++){
+                            if(checkBoxes[i].isChecked()){
+                                dotw += "1";
+                                dotwViews[i].setTextColor(getResources().getColor(R.color.grey));
+                            }else{
+                                dotw += "0";
+                                dotwViews[i].setTextColor(getResources().getColor(R.color.greyish));
+                            }
+                        }
+                        alarm.daysOfTheWeek = dotw;
+                        checklist.dismiss();
+                    }
+                });
+            }
+        });
         Typeface sourceSans = Typeface.createFromAsset(getActivity().getAssets(), "SourceSansProR.otf");
         RelativeLayout layoutContainer = (RelativeLayout)view.findViewById(R.id.container);
 
@@ -121,7 +152,7 @@ public class AlarmEdit extends Fragment{
         time += alarm.minute;
         if(alarm.ampm == 0)time += "AM";
         else time += "PM";
-        TextView displayedTime = new TextView(getActivity());
+        final TextView displayedTime = new TextView(getActivity());
         LayoutParams lp2 = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         lp2.setMargins(0, 0, (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, r.getDisplayMetrics()), 0);
         lp2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
@@ -131,6 +162,93 @@ public class AlarmEdit extends Fragment{
         displayedTime.setTypeface(sourceSans);
         layoutContainer.addView(displayedTime);
 
+        (view.findViewById(R.id.alarmTimeSelector)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((InputMethodManager)getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                final DialogEditText alert = new DialogEditText(getActivity(), "Time", displayedTime.getText().toString(), 150);
+                alert.show();
+                alert.setCanceledOnTouchOutside(false);
+
+                alert.ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(!alert.input.getText().toString().equals("")){
+                            String input = alert.input.getText().toString();
+                            int colonPos = -1;
+                            int ampmPos = -1;
+                            int hour = 0;
+                            int minute = 0;
+                            int ampm = 0;
+                            if(input.length() < 5){
+                                for(int i = 0; i < input.length(); i++){
+                                    char current = input.charAt(i);
+                                    if((current == 'm' || current == 'M') && i > 1)ampmPos = i - 1;
+                                }
+                                try {
+                                    hour = Integer.parseInt(input.substring(0, ampmPos));
+                                } catch (NumberFormatException e) {
+                                    Log.i("Invalid Input", "Not a number");
+                                }
+                                minute = 0;
+                            }else {
+                                for (int i = 0; i < input.length(); i++) {
+                                    char current = input.charAt(i);
+                                    if (current == ':') colonPos = i;
+                                    if ((current == 'm' || current == 'M') && i > colonPos + 2)
+                                        ampmPos = i - 1;
+                                }
+                                if (colonPos == -1) {
+                                    alert.dismiss();
+                                    return;
+                                }
+                                try {
+                                    hour = Integer.parseInt(input.substring(0, colonPos));
+                                    if (ampmPos != -1)
+                                        minute = Integer.parseInt(input.substring(colonPos + 1, ampmPos));
+                                    else
+                                        minute = Integer.parseInt(input.substring(colonPos + 1, input.length()));
+                                } catch (NumberFormatException e) {
+                                    Log.i("Invalid Input", "Not a number");
+                                }
+                            }
+                            if(hour > 12 || minute > 59){
+                                alert.dismiss();
+                                return;
+                            }
+                            if(ampmPos == -1) ampm = 0;
+                            else{
+                                if(input.substring(ampmPos, input.length()).toLowerCase().equals("am"))ampm = 0;
+                                else ampm = 1;
+                            }
+                            alarm.hour = hour;
+                            alarm.minute = minute;
+                            alarm.ampm = ampm;
+                            String time = "";
+                            time += alarm.hour + ":";
+                            if(alarm.minute < 10)time += "0";
+                            time += alarm.minute;
+                            if(alarm.ampm == 0)time += "AM";
+                            else time += "PM";
+                            displayedTime.setText(time);
+
+                        }
+                        alert.dismiss();
+                        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                    }
+                });
+
+                alert.cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                    }
+                });
+
+            }
+        });
+
 
         ((TextView)view.findViewById(R.id.ringtoneText)).setTypeface(sourceSans);
 
@@ -138,8 +256,9 @@ public class AlarmEdit extends Fragment{
         setRingtone.setTypeface(sourceSans);
         setRingtone.setText(alarm.ringtone.substring(0, alarm.ringtone.length() - 4));
 
-        int letterSpacer = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 175, r.getDisplayMetrics());
+        int letterSpacer = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 180, r.getDisplayMetrics());
         String[] dotwLetters = {"M","T","W","TH","F", "S", "SU"};
+        int counter = 0;
         for(int i = 0; i < dotwLetters.length; i++){
             TextView l = new TextView(getActivity());
             LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -148,7 +267,7 @@ public class AlarmEdit extends Fragment{
             l.setLayoutParams(lp);
             l.setTypeface(sourceSans);
             l.setText(dotwLetters[i]);
-            l.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+            l.setTextSize(TypedValue.COMPLEX_UNIT_SP, 26);
             char onOff = alarm.daysOfTheWeek.charAt(i);
             if(onOff == '0') l.setTextColor(getResources().getColor(R.color.greyish));
             layoutContainer.addView(l);
@@ -156,11 +275,14 @@ public class AlarmEdit extends Fragment{
                 letterSpacer -= (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, r.getDisplayMetrics());
             }else if(i == 1){
                 letterSpacer -= (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, r.getDisplayMetrics());
+            }else if(i == 4 || i == 3){
+                letterSpacer -= (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, r.getDisplayMetrics());
             }else
                 letterSpacer -= (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, r.getDisplayMetrics());
-        }
 
-        AlarmEdit thisObj = this;
+            dotwViews[counter] = l;
+            counter++;
+        }
 
         ((ImageView)view.findViewById(R.id.nextArrow)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,12 +297,21 @@ public class AlarmEdit extends Fragment{
 //
 //                NotificationManager notifyMgr = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
 //                notifyMgr.notify(id, builder.build());
-                ft = getFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+                if(tag.equals("newAlarmFrag")) {
+                    ft = getFragmentManager().beginTransaction();
+                    ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
 
-                ft.replace(R.id.container, ((Home)getActivity()).homeContentPage);
+                    ft.replace(R.id.container, ((Home)getActivity()).homeContentPage);
+                    callBack.alarmEditFinish(lastView);
+                }else{
+                    ft = getFragmentManager().beginTransaction();
+                    ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                    ft.replace(R.id.container, ((Home)getActivity()).alarmsCurrent);
+                    callBack.alarmEditFinish(lastView);
+                }
                 ft.commit();
-                callBack.alarmEditFinish(lastView);
+
             }
         });
 
@@ -194,13 +325,13 @@ public class AlarmEdit extends Fragment{
         ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
 
         if(tag.equals("newAlarmFrag")) {
-            ft.replace(R.id.container, (AlarmNew)lastFragment, "newAlarmFrag");
+            ft.replace(R.id.container, lastFragment, "newAlarmFrag");
             callBack.newAlarmReload(alarm);
         }else{
-
+            ft.replace(R.id.container, lastFragment, "alarmsCurrentFrag");
         }
         ft.commit();
-        callBack.returnFromEditAlarm((AlarmNew)lastFragment, lastView);
+        callBack.returnFromEditAlarm(lastFragment, lastView);
     }
 
     public void setAlarm(Alarm alarm){

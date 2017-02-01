@@ -42,22 +42,6 @@ public class Alarms extends Fragment {
         view = (RelativeLayout)inflater.inflate(R.layout.alarms, container, false);
 
 
-        returnFromAlarms = (TextView)view.findViewById(R.id.returnFromAlarms);
-        returnFromAlarms.setOnClickListener(
-                new TextView.OnClickListener(){
-                    @Override
-                    public void onClick(View v){
-                        ft = getFragmentManager().beginTransaction();
-
-                        ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-
-                        ft.replace(R.id.container, ((Home)getActivity()).homeContentPage);
-                        ft.commit();
-                        callBack.leaveFromAlarms();
-                    }
-                }
-        );
-
         final AlarmsCurrent alarmsCurrent = new AlarmsCurrent();
         View toCurrentAlarms = (View)view.findViewById(R.id.toCurrentAlarms);
         toCurrentAlarms.setOnClickListener(new View.OnClickListener() {

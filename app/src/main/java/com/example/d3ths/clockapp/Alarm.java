@@ -10,6 +10,7 @@ public class Alarm {
     public int minute;
     public int ampm;
     public String daysOfTheWeek;
+    public boolean active;
 
     public Alarm(int hr, int min, int ampm, String daysOfTheWeek){
         hour = hr;
@@ -18,6 +19,7 @@ public class Alarm {
         this.daysOfTheWeek = daysOfTheWeek;
         name = "My Alarm";
         ringtone = "default.mp3";
+        active = true;
     }
 
     public void setName(String name){

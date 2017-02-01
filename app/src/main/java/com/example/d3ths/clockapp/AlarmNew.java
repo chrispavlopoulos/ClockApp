@@ -55,7 +55,7 @@ public class AlarmNew extends Fragment {
         dp142 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 142, r.getDisplayMetrics());
         dp184 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 184, r.getDisplayMetrics());
 
-        view = (RelativeLayout)inflater.inflate(R.layout.alarms_new, container, false);
+        view = (RelativeLayout)inflater.inflate(R.layout.alarm_new, container, false);
 
         ft = getFragmentManager().beginTransaction();
         SelectionHour selectionHour = new SelectionHour();
@@ -219,8 +219,8 @@ public class AlarmNew extends Fragment {
                     callBack.changeValues(tempAlarm);
                     String daysOfTheWeek = tempAlarm.daysOfTheWeek;
                     for(int i = 0; i < checkBoxes.size(); i++){
-                        int onOff = daysOfTheWeek.charAt(i);
-                        if(onOff == 1){
+                        char onOff = daysOfTheWeek.charAt(i);
+                        if(onOff == '1'){
                             checkBoxes.get(i).setChecked(true);
                         }
                     }

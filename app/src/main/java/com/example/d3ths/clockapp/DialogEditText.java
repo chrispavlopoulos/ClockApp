@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,12 +25,21 @@ public class DialogEditText extends Dialog{
     public EditText input;
     String msg;
     String pastText;
+    int blankSize;
 
     public DialogEditText(Activity a, String msg, String pastText) {
         super(a);
         this.c = a;
         this.msg = msg;
         this.pastText = pastText;
+    }
+
+    public DialogEditText(Activity a, String msg, String pastText, int blankSize) {
+        super(a);
+        this.c = a;
+        this.msg = msg;
+        this.pastText = pastText;
+        this.blankSize = blankSize;
     }
 
     @Override
@@ -43,6 +53,9 @@ public class DialogEditText extends Dialog{
         input.setText(pastText);
         input.setTextSize(20);
         input.selectAll();
+        if(blankSize > 0){
+            input.setWidth((int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, blankSize, c.getResources().getDisplayMetrics()));
+        }else input.setWidth((int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, c.getResources().getDisplayMetrics()));
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         input.getBackground().setColorFilter(c.getResources().getColor(R.color.orange), PorterDuff.Mode.SRC_IN);
         ok = (ImageView) findViewById(R.id.alertOkButton);

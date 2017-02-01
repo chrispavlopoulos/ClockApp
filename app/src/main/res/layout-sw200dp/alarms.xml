@@ -6,7 +6,8 @@
         android:layout_height="100dp"
         android:layout_marginTop="100dp"
         android:layout_centerHorizontal="true"
-        android:background="@color/lessGrey"/>
+        android:background="@color/lessGrey"
+        android:id="@+id/toCurrentAlarms"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

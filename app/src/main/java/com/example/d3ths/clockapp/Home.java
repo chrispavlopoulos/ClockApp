@@ -436,6 +436,11 @@ public class Home extends AppCompatActivity implements SelectionHour.CallBacks, 
     public void leaveFromAlarmsCurrent(){
         currentView = "alarmsPage";
     }
+    @Override
+    public void alarmsCurrentGoToView(Fragment frag, String view){
+        passFragment(frag);
+        currentView = view;
+    }
 
     //New Alarm
 
@@ -448,14 +453,13 @@ public class Home extends AppCompatActivity implements SelectionHour.CallBacks, 
 
         @Override
         public void returnFromNewAlarm(){
-            currentView = "alarmPage";
+            currentView = "alarmsPage";
         }
 
         @Override
         public void newAlarmGoToView(Fragment frag, String view){
             passFragment(frag);
-            goToView(view
-            );
+            goToView(view);
         }
 
         //Hour
@@ -535,6 +539,8 @@ public class Home extends AppCompatActivity implements SelectionHour.CallBacks, 
         if(view.equals("newAlarmPage")){
             currentView = "homePage";
             turnArrowFromLeft();
+        }else{
+            currentView = view;
         }
     }
 
@@ -590,14 +596,26 @@ public class Home extends AppCompatActivity implements SelectionHour.CallBacks, 
         }catch(Exception e){
             Log.println(Log.ERROR ,"err","The error was " + e);
         }
+    }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
     }
 
     @Override
     public void onBackPressed(){
-        finish();
-        System.exit(0);
+        if(currentView.equals("homePage"))this.finish();
+        addaptableArrow.callOnClick();
 
     }
 
