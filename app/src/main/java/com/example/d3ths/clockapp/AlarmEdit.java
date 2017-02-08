@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -295,27 +296,24 @@ public class AlarmEdit extends Fragment{
         ((ImageView)view.findViewById(R.id.nextArrow)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ft = getFragmentManager().beginTransaction();
+                ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
                 if(tag.equals("newAlarmFrag")) {
-                    ft = getFragmentManager().beginTransaction();
-                    ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
-
                     ft.replace(R.id.container, ((Home)getActivity()).homeContentPage);
-                    callBack.alarmEditFinish(lastView);
                 }else{
-                    ft = getFragmentManager().beginTransaction();
-                    ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
-
                     ft.replace(R.id.container, ((Home)getActivity()).alarmsCurrent);
-                    callBack.alarmEditFinish(lastView);
                 }
+                callBack.alarmEditFinish(lastView);
                 alarm.init();
                 ft.commit();
 
             }
         });
-        ImageView deleteButton = (ImageView)view.findViewById(R.id.deleteButton);
+        final ImageView deleteButton = (ImageView)view.findViewById(R.id.deleteButton);
+        deleteButton.setAlpha(0f);
         if(tag.equals("newAlarmFrag"))((RelativeLayout)view.findViewById(R.id.scrollContainer)).removeView(deleteButton);
         else {
+            fadeIn(deleteButton);
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -328,6 +326,21 @@ public class AlarmEdit extends Fragment{
 
         return view;
 
+    }
+
+    int counter;
+    Handler handler = new Handler();
+    public void fadeIn(final View v){
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(counter > 5) v.setAlpha(v.getAlpha() + 0.2f);
+                counter++;
+
+                if(v.getAlpha() < 1f)fadeIn(v);
+                else counter = 0;
+            }
+        }, 50);
     }
 
     public void goBack(){
