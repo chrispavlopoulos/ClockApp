@@ -37,7 +37,7 @@ public class Alarm {
     }
 
     public void init(){
-        deactivateAll();
+        if(alarmManager != null) deactivateAll();
         setActive(true);
     }
 
@@ -111,7 +111,7 @@ public class Alarm {
 
     public void deactivateAll(){
         for(PendingIntent p: setAlarms){
-            alarmManager.cancel(p);
+            if(p != null) alarmManager.cancel(p);
         }
         if(oneTimeAlarm != null) oneTimeAlarm.cancel();
     }
