@@ -37,11 +37,15 @@ public class Alarm {
     }
 
     public void init(){
+        deactivateAll();
         setActive(true);
     }
 
     public void setActive(boolean tf){
         active = tf;
+        if(!active){
+            deactivateAll();
+        }
         boolean allZeros = true;
         for(int i = 0; i < daysOfTheWeek.length(); i++){
             if(daysOfTheWeek.charAt(i) == '0'){
@@ -50,6 +54,7 @@ public class Alarm {
                 }
                 continue;
             }
+            oneTimeAlarm.cancel();
             allZeros = false;
             alarmManager = (AlarmManager)a.getSystemService(Context.ALARM_SERVICE);
             Intent myIntent = new Intent(a.getApplicationContext(), AlarmReceiver.class);
