@@ -113,7 +113,7 @@ public class Alarm {
         for(PendingIntent p: setAlarms){
             alarmManager.cancel(p);
         }
-        oneTimeAlarm.cancel();
+        if(oneTimeAlarm != null) oneTimeAlarm.cancel();
     }
 
     public void setName(String name){
