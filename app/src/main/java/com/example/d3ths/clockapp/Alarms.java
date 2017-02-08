@@ -41,7 +41,6 @@ public class Alarms extends Fragment {
 
         view = (RelativeLayout)inflater.inflate(R.layout.alarms, container, false);
 
-
         final AlarmsCurrent alarmsCurrent = new AlarmsCurrent();
         View toCurrentAlarms = (View)view.findViewById(R.id.toCurrentAlarms);
         toCurrentAlarms.setOnClickListener(new View.OnClickListener() {

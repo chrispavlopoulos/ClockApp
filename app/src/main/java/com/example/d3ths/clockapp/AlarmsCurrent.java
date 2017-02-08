@@ -24,6 +24,7 @@ public class AlarmsCurrent extends Fragment{
     FragmentTransaction ft;
     View view;
     int textSizeTime;
+    int nameMarginL;
     int boxHeight;
     int borderW;
     int borderH;
@@ -47,7 +48,7 @@ public class AlarmsCurrent extends Fragment{
                 marginTopShiftDotw = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 53, r.getDisplayMetrics());
                 letterSpacer = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, r.getDisplayMetrics());
                 letterSpacerChange = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, r.getDisplayMetrics());
-
+                nameMarginL = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, r.getDisplayMetrics());
                 break;
             //HTC One M9
             case (480):
@@ -58,6 +59,7 @@ public class AlarmsCurrent extends Fragment{
                 marginTopShiftDotw = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 43, r.getDisplayMetrics());
                 letterSpacer = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 170, r.getDisplayMetrics());
                 letterSpacerChange = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, r.getDisplayMetrics());
+                nameMarginL = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 170, r.getDisplayMetrics());
                 break;
 
             default:
@@ -68,6 +70,7 @@ public class AlarmsCurrent extends Fragment{
                 marginTopShiftDotw = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 43, r.getDisplayMetrics());
                 letterSpacer = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 170, r.getDisplayMetrics());
                 letterSpacerChange = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, r.getDisplayMetrics());
+                nameMarginL = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 170, r.getDisplayMetrics());
                 break;
         }
 
@@ -144,20 +147,22 @@ public class AlarmsCurrent extends Fragment{
             }
 
             String nameText = "";
-            if(alarm.name.length() < 15){
+            if(alarm.name.length() < 12){
                 nameText += alarm.name;
-            }else nameText += alarm.name.substring(0, 14) + "...";
+            }else nameText += alarm.name.substring(0, 11) + "-";
             TextView name = new TextView(getContext());
             LayoutParams lp4 = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-            lp4.setMargins((int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, r.getDisplayMetrics()), marginTop + (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, r.getDisplayMetrics()), 0, 0);
+            lp4.setMargins(nameMarginL, marginTop + (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, r.getDisplayMetrics()), 0, 0);
             name.setMaxLines(1);
             name.setLayoutParams(lp4);
             name.setText(nameText);
             name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 31);
             name.setTypeface(sourceSans);
-            if(alarm.active)name.setTextColor(r.getColor(R.color.grey));
-            else if(evenOdd % 2 == 0)name.setTextColor(r.getColor(R.color.whiteTaint));
-            else name.setTextColor(r.getColor(R.color.greyish));
+            if(alarm.active)name.setAlpha(1f);
+            else name.setAlpha(0.4f);
+            //if(alarm.active)name.setTextColor(r.getColor(R.color.grey));
+            //else if(evenOdd % 2 == 0)name.setTextColor(r.getColor(R.color.whiteTaint));
+            //else name.setTextColor(r.getColor(R.color.greyish));
             layoutContainer.addView(name);
 
             final Fragment thisObj = this;

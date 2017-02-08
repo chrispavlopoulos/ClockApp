@@ -72,6 +72,8 @@ public class DialogAlarmOverview extends Dialog{
         alarmName.setTextSize(textSize);
         alarmName.setText(alarm.name);
         alarmName.setTypeface(sourceSans);
+        if(alarm.active)alarmName.setAlpha(1f);
+        else alarmName.setAlpha(0.4f);
         edit = (ImageView) findViewById(R.id.alertEditButton);
         cancel = (ImageView) findViewById(R.id.alertCancelButton);
 

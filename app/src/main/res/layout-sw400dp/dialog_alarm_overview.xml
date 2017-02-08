@@ -28,7 +28,7 @@
         android:layout_alignParentBottom="true"
         android:src="@drawable/edit_symbol_orange"
         android:id="@+id/alertEditButton"
-        android:text="Ok"/>
+        android:text="Edit"/>
 
     <ImageView
         android:layout_width="45dp"

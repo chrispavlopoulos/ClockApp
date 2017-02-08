@@ -192,7 +192,7 @@ public class AlarmNew extends Fragment {
                         daysOfTheWeek += "0";
                     }
                 }
-                Alarm alarm = new Alarm(hour, minute, ampm, daysOfTheWeek);
+                Alarm alarm = new Alarm(hour, minute, ampm, daysOfTheWeek, getActivity());
                 if(reloaded)alarm.setName(tempAlarm.name);
                 ((Home)getActivity()).alarms.add(alarm);
 

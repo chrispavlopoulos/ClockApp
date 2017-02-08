@@ -112,6 +112,18 @@
             <ImageView
                 android:layout_width="85dp"
                 android:layout_height="85dp"
+                android:layout_marginTop="83dp"
+                android:paddingStart="25dp"
+                android:paddingEnd="0dp"
+                android:paddingBottom="10dp"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/delete_button_orange"
+                android:id="@+id/deleteButton"
+                android:text="Delete"/>
+
+            <ImageView
+                android:layout_width="85dp"
+                android:layout_height="85dp"
                 android:layout_marginTop="580dp"
                 android:src="@drawable/next_arrow"
                 android:id="@+id/nextArrow"

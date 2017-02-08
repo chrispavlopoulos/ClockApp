@@ -2,12 +2,15 @@ package com.example.d3ths.clockapp;
 
 
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.icu.util.Calendar;
 import android.icu.util.TimeZone;
 import android.os.Build;
 
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -31,13 +34,16 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * Created by Chris on 8/30/2016.
  */
 public class Home extends AppCompatActivity implements SelectionHour.CallBacks, SelectionMinute.CallBacks, HomeContent.CallBacks,
-        SelectionAMPM.CallBacks, Alarms.Callbacks, Time.CallBacks, AlarmNew.Callbacks, AlarmEdit.Callbacks, AlarmsCurrent.Callbacks{
+        SelectionAMPM.CallBacks, Alarms.Callbacks, Time.CallBacks, AlarmNew.Callbacks, AlarmEdit.Callbacks,
+        AlarmsCurrent.Callbacks{
 
     FragmentManager manager;
     ArrayList<Alarm> alarms = new ArrayList<>();
@@ -69,6 +75,19 @@ public class Home extends AppCompatActivity implements SelectionHour.CallBacks, 
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_home);
 
+//        SharedPreferences.Editor ed = getSharedPreferences("prefs", 0).edit().clear();
+//        ed.apply();
+        Set<String> old = getSharedPreferences("prefs", 0).getStringSet("values", null);
+        if(old != null && !old.isEmpty()) {
+            for (String v : old) {
+                String[] values = v.split(" . ");
+                Alarm a = new Alarm(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]), values[3], this);
+                a.name = values[4];
+                a.init();
+                alarms.add(a);
+            }
+        }
+
         manager = getSupportFragmentManager();
         homeContentPage = new HomeContent();
         fragTran = manager.beginTransaction();
@@ -97,12 +116,6 @@ public class Home extends AppCompatActivity implements SelectionHour.CallBacks, 
 
 
         Typeface typeface = Typeface.createFromAsset(getAssets(), "SourceSansProR.otf");
-
-        Calendar cal = Calendar.getInstance();
-        final Date currentLocalTime = cal.getTime();
-        DateFormat date = new SimpleDateFormat("K:mm a");
-        date.setTimeZone(java.util.TimeZone.getTimeZone("GMT" + timeZone()));
-        String localTime = date.format(currentLocalTime);
 
 
 
@@ -552,30 +565,16 @@ public class Home extends AppCompatActivity implements SelectionHour.CallBacks, 
     }
 
 
-
-    public static String timeZone()
-    {
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"), Locale.getDefault());
-        String   timeZone = new SimpleDateFormat("Z").format(calendar.getTime());
-        return timeZone.substring(0, 3) + ":"+ timeZone.substring(3, 5);
-    }
-
-    private void doTheAutoRefresh() {
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Calendar cal = Calendar.getInstance();
-                Date currentLocalTime = cal.getTime();
-                DateFormat date = new SimpleDateFormat("K:mm a");
-                date.setTimeZone(java.util.TimeZone.getTimeZone("GMT" + timeZone()));
-                String localTime = date.format(currentLocalTime);
-                TextView time = (TextView) findViewById(R.id.time);
-                //time.setText(localTime);
-
-
-                doTheAutoRefresh();
-            }
-        }, 10);
+    private void buildBackup(){
+        Set<String> set = new HashSet<String>();
+        for(Alarm a: alarms){
+            String values = "";
+            values += a.hour + " . " + a.minute + " . " + a.ampm + " . " + a.daysOfTheWeek + " . " + a.name;
+            set.add(values);
+        }
+        SharedPreferences.Editor editor = getSharedPreferences("prefs", 0).edit();
+        editor.putStringSet("values", set);
+        editor.apply();
     }
 
     @Override
@@ -601,15 +600,14 @@ public class Home extends AppCompatActivity implements SelectionHour.CallBacks, 
     @Override
     public void onPause(){
         super.onPause();
+        buildBackup();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
     }
 
     @Override
     public void onStop(){
         super.onStop();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
     }
 
     @Override

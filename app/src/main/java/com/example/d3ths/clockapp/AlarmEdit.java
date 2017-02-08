@@ -1,6 +1,7 @@
 package com.example.d3ths.clockapp;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Typeface;
@@ -175,6 +176,10 @@ public class AlarmEdit extends Fragment{
                     public void onClick(View view) {
                         if(!alert.input.getText().toString().equals("")){
                             String input = alert.input.getText().toString();
+                            if(input.length() < 3){
+                                alert.dismiss();
+                                return;
+                            }
                             int colonPos = -1;
                             int ampmPos = -1;
                             int hour = 0;
@@ -184,6 +189,10 @@ public class AlarmEdit extends Fragment{
                                 for(int i = 0; i < input.length(); i++){
                                     char current = input.charAt(i);
                                     if((current == 'm' || current == 'M') && i > 1)ampmPos = i - 1;
+                                }
+                                if(ampmPos == -1){
+                                    dismiss(alert);
+                                    return;
                                 }
                                 try {
                                     hour = Integer.parseInt(input.substring(0, ampmPos));
@@ -199,7 +208,7 @@ public class AlarmEdit extends Fragment{
                                         ampmPos = i - 1;
                                 }
                                 if (colonPos == -1) {
-                                    alert.dismiss();
+                                    dismiss(alert);
                                     return;
                                 }
                                 try {
@@ -213,7 +222,7 @@ public class AlarmEdit extends Fragment{
                                 }
                             }
                             if(hour > 12 || minute > 59){
-                                alert.dismiss();
+                                dismiss(alert);
                                 return;
                             }
                             if(ampmPos == -1) ampm = 0;
@@ -233,8 +242,7 @@ public class AlarmEdit extends Fragment{
                             displayedTime.setText(time);
 
                         }
-                        alert.dismiss();
-                        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                        dismiss(alert);
                     }
                 });
 
@@ -287,16 +295,6 @@ public class AlarmEdit extends Fragment{
         ((ImageView)view.findViewById(R.id.nextArrow)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                NotificationCompat.Builder builder =
-//                        new NotificationCompat.Builder(getContext())
-//                                .setSmallIcon(R.drawable.bell)
-//                                .setContentTitle("My notification")
-//                                .setContentText("Hello World!");
-//
-//                int id = 001;
-//
-//                NotificationManager notifyMgr = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-//                notifyMgr.notify(id, builder.build());
                 if(tag.equals("newAlarmFrag")) {
                     ft = getFragmentManager().beginTransaction();
                     ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -310,10 +308,23 @@ public class AlarmEdit extends Fragment{
                     ft.replace(R.id.container, ((Home)getActivity()).alarmsCurrent);
                     callBack.alarmEditFinish(lastView);
                 }
+                alarm.init();
                 ft.commit();
 
             }
         });
+        ImageView deleteButton = (ImageView)view.findViewById(R.id.deleteButton);
+        if(tag.equals("newAlarmFrag"))((RelativeLayout)view.findViewById(R.id.scrollContainer)).removeView(deleteButton);
+        else {
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alarm.deactivateAll();
+                    ((Home) getActivity()).alarms.remove(alarm);
+                    goBack();
+                }
+            });
+        }
 
         return view;
 
@@ -362,6 +373,11 @@ public class AlarmEdit extends Fragment{
     public void onAttach(Activity activity){
         callBack = (Callbacks) activity;
         super.onAttach(activity);
+    }
+
+    public void dismiss(Dialog alert){
+        alert.dismiss();
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
 }

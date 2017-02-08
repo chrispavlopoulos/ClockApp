@@ -9,7 +9,8 @@
         android:id="@+id/scrollView2">
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="580dp">
+            android:layout_height="580dp"
+            android:id="@+id/scrollContainer">
 
             <View
                 android:layout_width="match_parent"
@@ -103,15 +104,27 @@
             </RelativeLayout>
 
             <ImageView
-                android:layout_width="85dp"
-                android:layout_height="85dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_marginTop="83dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="0dp"
+                android:paddingBottom="15dp"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/delete_button_orange"
+                android:id="@+id/deleteButton"
+                android:text="Delete"/>
+
+            <ImageView
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:src="@drawable/next_arrow"
                 android:id="@+id/nextArrow"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:paddingStart="0dp"
-                android:paddingEnd="25dp"
-                android:paddingBottom="0dp"/>
+                android:paddingEnd="5dp"
+                android:paddingBottom="5dp"/>
 
         </RelativeLayout>
     </ScrollView>
