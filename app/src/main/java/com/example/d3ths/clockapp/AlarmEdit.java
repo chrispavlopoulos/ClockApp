@@ -305,6 +305,7 @@ public class AlarmEdit extends Fragment{
                 }
                 callBack.alarmEditFinish(lastView);
                 alarm.init();
+                ((Home)getActivity()).buildBackup();
                 ft.commit();
 
             }
@@ -334,7 +335,7 @@ public class AlarmEdit extends Fragment{
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(counter > 5) v.setAlpha(v.getAlpha() + 0.2f);
+                if(counter > 4) v.setAlpha(v.getAlpha() + 0.2f);
                 counter++;
 
                 if(v.getAlpha() < 1f)fadeIn(v);

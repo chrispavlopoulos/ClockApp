@@ -4,33 +4,27 @@
     android:layout_height="match_parent"
     android:id="@+id/ampmOverlay">
 
-    <ScrollView
+    <RelativeLayout
+        android:layout_marginTop="0dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scrollbars="none"
-        android:overScrollMode="never"
-        android:id="@+id/numScrollView3">
-        <RelativeLayout
-            android:layout_marginTop="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/scroll4Me">
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@null" />
-            <View
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:background="@null"/>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/ampmNumList">
-            </RelativeLayout>
-
+            android:layout_height="match_parent"
+            android:background="@null" />
+        <View
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:background="@null"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/ampmNumList">
         </RelativeLayout>
-    </ScrollView>
+
+    </RelativeLayout>
 
 </RelativeLayout>

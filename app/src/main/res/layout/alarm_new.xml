@@ -4,154 +4,314 @@
     android:layout_height="match_parent"
     android:id="@+id/alarmsLayout">
 
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-    <View android:layout_height="195dp"
-        android:layout_width="140dp"
-        android:id="@+id/hr"/>
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="47dp"
-        android:layout_marginTop="90dp"
-        android:src="@drawable/arrowup"
-        android:background="@drawable/arrow_selector"
-        android:scaleType="centerInside"
-        android:id="@+id/aArrowUp"/>
-    <TextView
-        android:id="@+id/gradientTop"
-        android:layout_width="1000dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="150dp"
-        android:background="@drawable/fade_top">
-    </TextView>
+    <!-- Smaller Width Screens-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/greyish"
+        android:layout_marginTop="70dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="-5dp"
+            android:text="Set Time:"
+            android:textSize="50sp"
+            android:textColor="@color/grey"
+            android:id="@+id/setTimeText"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/white"
+            android:layout_marginEnd="5dp"
+            android:layout_alignParentEnd="true"
+            android:textSize="35sp"
+            android:id="@+id/aHT" />
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="horizontal"
-        android:layout_width="140dp"
-        android:layout_height="195dp"
-        android:id="@+id/alarmTimeSelection"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="150dp">
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/gradientBottom"
-        android:layout_width="1000dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="300dp"
-        android:background="@drawable/fade_bottom">
-    </TextView>
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="47dp"
-        android:layout_marginTop="360dp"
-        android:src="@drawable/arrowdown"
-        android:background="@drawable/arrow_selector"
-        android:scaleType="centerInside"
-        android:id="@+id/aArrowDown" />
-
-
-
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="177dp"
-        android:layout_marginTop="90dp"
-        android:src="@drawable/arrowup"
-        android:background="@drawable/arrow_selector"
-        android:scaleType="centerInside"
-        android:id="@+id/aArrowUp2"/>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="140dp"
-        android:layout_height="195dp"
-        android:id="@+id/alarmTimeSelection2"
-        android:layout_marginStart="138dp"
-        android:layout_marginTop="150dp">
-    </LinearLayout>
-
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="177dp"
-        android:layout_marginTop="360dp"
-        android:src="@drawable/arrowdown"
-        android:background="@drawable/arrow_selector"
-        android:scaleType="centerInside"
-        android:id="@+id/aArrowDown2" />
-
-
-
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="180dp"
-        android:layout_height="195dp"
-        android:id="@+id/alarmTimeSelection3"
-        android:layout_marginStart="227dp"
-        android:layout_marginTop="150dp">
-    </LinearLayout>
-
-
-
-
-
-    <!--
-    <EditText
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Alarm Time"
-        android:layout_below="@+id/alarmTimeSelection"
-        android:layout_marginTop="30dp"
-        android:layout_centerHorizontal="true"
-        android:lines="1"/>
-        -->
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="-10dp">
 
+        <View
+            android:layout_height="165dp"
+            android:layout_width="140dp"
+            android:layout_marginTop="150dp"
+            android:id="@+id/hr"/>
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="90dp"
+            android:src="@drawable/arrowup"
+            android:background="@drawable/arrow_selector"
+            android:scaleType="centerInside"
+            android:id="@+id/hrArrowUp"/>
+        <TextView
+            android:id="@+id/gradientTop"
+            android:layout_width="1000dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="142dp"
+            android:background="@drawable/fade_top">
+        </TextView>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="140dp"
+            android:layout_height="175dp"
+            android:id="@+id/alarmTimeSelection"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="143dp">
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/gradientBottom"
+            android:layout_width="1000dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="270dp"
+            android:background="@drawable/fade_bottom">
+        </TextView>
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="330dp"
+            android:src="@drawable/arrowdown"
+            android:background="@drawable/arrow_selector"
+            android:scaleType="centerInside"
+            android:id="@+id/hrArrowDown" />
+
+
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="170dp"
+            android:layout_marginTop="90dp"
+            android:src="@drawable/arrowup"
+            android:background="@drawable/arrow_selector"
+            android:scaleType="centerInside"
+            android:id="@+id/minArrowUp"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="140dp"
+            android:layout_height="175dp"
+            android:id="@+id/alarmTimeSelection2"
+            android:layout_marginStart="138dp"
+            android:layout_marginTop="145dp">
+        </LinearLayout>
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="170dp"
+            android:layout_marginTop="330dp"
+            android:src="@drawable/arrowdown"
+            android:background="@drawable/arrow_selector"
+            android:scaleType="centerInside"
+            android:id="@+id/minArrowDown" />
+
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:includeFontPadding="false"
+            android:layout_gravity="fill_vertical"
+            android:layout_width="180dp"
+            android:layout_height="165dp"
+            android:id="@+id/alarmTimeSelection3"
+            android:layout_marginStart="217dp"
+            android:layout_marginTop="150dp">
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/circle"
+            android:background="@drawable/circle"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="170dp"/>
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/circle2"
+            android:background="@drawable/circle"
+            android:layout_marginStart="139dp"
+            android:layout_marginTop="170dp"/>
+    </RelativeLayout>
+
+
+
+
+
+        <!--
+        <EditText
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:0dp"
+            android:layout_centerHorizontal="true"
+            android:lines="1"/>
+            -->
+            <View
+                android:layout_width="320dp"
+                android:layout_centerHorizontal="true"
+                android:layout_height="2dp"
+                android:background="@color/greyer"
+                android:layout_marginTop="140dp"/>
+            <View
+                android:layout_width="320dp"
+                android:layout_centerHorizontal="true"
+                android:layout_height="2dp"
+                android:background="@color/greyer"
+                android:layout_marginTop="440dp"/>
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <!-- check boxes for days of the week -->
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        android:id="@+id/checkMon"
+        android:buttonTint="@color/darkishOrange"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="450dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Return to Home"
-        android:id="@+id/returnFromAlarms"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="45dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:text="M"
+        android:textSize="20sp"
+        android:layout_marginStart="22dp"
+        android:layout_below="@+id/checkMon"/>
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        android:id="@+id/checkTues"
+        android:buttonTint="@color/darkishOrange"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="450dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/circle"
-        android:background="@drawable/circle"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="184dp"/>
+        android:text="T"
+        android:textSize="20sp"
+        android:layout_marginStart="74dp"
+        android:layout_below="@+id/checkTues"/>
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        android:id="@+id/checkWed"
+        android:buttonTint="@color/darkishOrange"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="450dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/circle2"
-        android:background="@drawable/circle"
-        android:layout_marginStart="139dp"
-        android:layout_marginTop="184dp"/>
+        android:text="W"
+        android:textSize="20sp"
+        android:layout_marginStart="122dp"
+        android:layout_below="@+id/checkWed"/>
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        android:id="@+id/checkThur"
+        android:buttonTint="@color/darkishOrange"
+        android:layout_marginStart="165dp"
+        android:layout_marginTop="450dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="450dp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/aHT" />
+        android:text="TH"
+        android:textSize="20sp"
+        android:layout_marginStart="168dp"
+        android:layout_below="@+id/checkThur"/>
 
-    <Button
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/changeShit"
-        android:layout_alignTop="@+id/aHT"
-        android:layout_centerHorizontal="true" />
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        android:id="@+id/checkFri"
+        android:buttonTint="@color/darkishOrange"
+        android:layout_marginStart="215dp"
+        android:layout_marginTop="450dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="F"
+        android:textSize="20sp"
+        android:layout_marginStart="224dp"
+        android:layout_below="@+id/checkFri"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        android:id="@+id/checkSat"
+        android:buttonTint="@color/darkishOrange"
+        android:layout_marginStart="265dp"
+        android:layout_marginTop="450dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="S"
+        android:textSize="20sp"
+        android:layout_marginStart="274dp"
+        android:layout_below="@+id/checkSat"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        android:id="@+id/checkSun"
+        android:buttonTint="@color/darkishOrange"
+        android:layout_marginStart="315dp"
+        android:layout_marginTop="450dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SU"
+        android:textSize="20sp"
+        android:layout_marginStart="319dp"
+        android:layout_below="@+id/checkSun"/>
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="520dp"
+        android:src="@drawable/next_arrow"
+        android:id="@+id/nextArrow"
+        android:layout_marginStart="290dp"/>
 
 
 </RelativeLayout>

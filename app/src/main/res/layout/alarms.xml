@@ -1,5 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
+    <View
+        android:layout_width="275dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/lessGrey"
+        android:id="@+id/toCurrentAlarms"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="135dp"
+        android:text="Current Alarms"
+        android:layout_centerHorizontal="true"
+        android:textSize="25sp" />
+
+    <View
+        android:layout_width="275dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="250dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/lessGrey"
+        android:id="@+id/toAlarmNew"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="285dp"
+        android:text="Add New"
+        android:layout_centerHorizontal="true"
+        android:textSize="25sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Return to Home"
+        android:id="@+id/returnFromAlarms"
+        android:layout_marginTop="500dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>

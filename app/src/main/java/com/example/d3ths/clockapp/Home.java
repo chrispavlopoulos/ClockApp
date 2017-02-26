@@ -565,7 +565,7 @@ public class Home extends AppCompatActivity implements SelectionHour.CallBacks, 
     }
 
 
-    private void buildBackup(){
+    public void buildBackup(){
         Set<String> set = new HashSet<String>();
         for(Alarm a: alarms){
             String values = "";
