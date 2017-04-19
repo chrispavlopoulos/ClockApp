@@ -171,6 +171,12 @@ public class AlarmsCurrent extends Fragment{
                 public void onClick(View view) {
                     final DialogAlarmOverview alert = new DialogAlarmOverview(getActivity(), alarm);
                     alert.show();
+                    alert.onOff.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alarm.setActive(alert.onOff.isChecked());
+                        }
+                    });
 
                     alert.edit.setOnClickListener(new View.OnClickListener() {
                         @Override
