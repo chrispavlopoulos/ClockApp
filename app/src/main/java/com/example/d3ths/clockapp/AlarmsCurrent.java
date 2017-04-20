@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,9 @@ public class AlarmsCurrent extends Fragment{
     int marginTopShiftDotw;
     int letterSpacer;
     int letterSpacerChange;
+
+    int currentAlarm = -1;
+    ArrayList<TextView> alarmNames = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -164,6 +168,9 @@ public class AlarmsCurrent extends Fragment{
             //else if(evenOdd % 2 == 0)name.setTextColor(r.getColor(R.color.whiteTaint));
             //else name.setTextColor(r.getColor(R.color.greyish));
             layoutContainer.addView(name);
+            alarmNames.add(name);
+            currentAlarm++;
+
 
             final Fragment thisObj = this;
             v.setOnClickListener(new View.OnClickListener() {
@@ -174,7 +181,9 @@ public class AlarmsCurrent extends Fragment{
                     alert.onOff.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            alarm.setActive(alert.onOff.isChecked());
+                            boolean active = alert.onOff.isChecked();
+                            alarm.setActive(active);
+                            checkStatus(alert.alarmName, currentAlarm, active);
                         }
                     });
 
@@ -229,6 +238,18 @@ public class AlarmsCurrent extends Fragment{
             default:
                 letterSpacer = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 170, r.getDisplayMetrics());
                 break;
+        }
+    }
+
+    public void checkStatus(TextView dialogName, int num, boolean active){
+        TextView name = alarmNames.get(num);
+        if(active){
+            name.setAlpha(1f);
+            dialogName.setAlpha(1f);
+        }
+        else{
+            name.setAlpha(0.4f);
+            dialogName.setAlpha(0.4f);
         }
     }
 

@@ -64,6 +64,7 @@ public class SelectionMinute extends Fragment {
         //Pixel to dp values for different displays
         DisplayMetrics displayMetrics = new DisplayMetrics();
         displayMetrics.density = getResources().getDisplayMetrics().density;
+        Log.i("size", ""+(int)(displayMetrics.density * 160));
         switch((int)(displayMetrics.density * 160)){
             //Nexus 5x
             case(420):

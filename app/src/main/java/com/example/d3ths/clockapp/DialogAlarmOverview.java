@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import org.w3c.dom.Text;
 
@@ -30,6 +31,7 @@ public class DialogAlarmOverview extends Dialog{
     Resources r;
     Alarm alarm;
     TextView alarmName;
+    ToggleButton onOff;
     int textSize;
     RelativeLayout pointedLayout;
     int letterSpacer;
@@ -102,6 +104,9 @@ public class DialogAlarmOverview extends Dialog{
             }else
                 letterSpacer -= (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, r.getDisplayMetrics());
         }
+
+        onOff = (ToggleButton)findViewById(R.id.onOff);
+        onOff.setChecked(alarm.active);
 
         alarmName.post(new Runnable() {
             @Override

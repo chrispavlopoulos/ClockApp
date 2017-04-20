@@ -88,7 +88,7 @@ public class SelectionAMPM extends Fragment {
 
 
         View view = inflater.inflate(R.layout.selection_ampm, container, false);
-        scrollView = (ScrollView) view.findViewById(R.id.numScrollView3);
+        //scrollView = (ScrollView) view.findViewById(R.id.scroll4Me);
         final RelativeLayout ampmOverlay = (RelativeLayout) view.findViewById(R.id.ampmOverlay);
 //        scrollView.setOnTouchListener(new View.OnTouchListener() {
 //            @Override

@@ -121,8 +121,6 @@ public class AlarmEdit extends Fragment{
                 String[] arr = {"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"};
                 final DialogChecklist checklist = new DialogChecklist(getActivity(), "Days", arr, alarm.daysOfTheWeek);
                 checklist.show();
-                checklist.setCanceledOnTouchOutside(false);
-
                 checklist.ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -183,7 +181,7 @@ public class AlarmEdit extends Fragment{
                             }
                             int colonPos = -1;
                             int ampmPos = -1;
-                            int hour = 0;
+                            int hour = 1;
                             int minute = 0;
                             int ampm = 0;
                             if(input.length() < 5){

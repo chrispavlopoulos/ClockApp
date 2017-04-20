@@ -45,6 +45,7 @@ public class Alarm {
         active = tf;
         if(!active){
             deactivateAll();
+            return;
         }
         boolean allZeros = true;
         for(int i = 0; i < daysOfTheWeek.length(); i++){
@@ -54,7 +55,7 @@ public class Alarm {
                 }
                 continue;
             }
-            oneTimeAlarm.cancel();
+            if(oneTimeAlarm!=null)oneTimeAlarm.cancel();
             allZeros = false;
             alarmManager = (AlarmManager)a.getSystemService(Context.ALARM_SERVICE);
             Intent myIntent = new Intent(a.getApplicationContext(), AlarmReceiver.class);
@@ -65,6 +66,7 @@ public class Alarm {
             if(ampm == 1)tempHour += 12;
             calendar.set(Calendar.HOUR_OF_DAY, tempHour);
             calendar.set(Calendar.MINUTE, minute);
+            calendar.set(Calendar.SECOND, 0);
             if(System.currentTimeMillis() > calendar.getTimeInMillis()) calendar.add(Calendar.DATE, 1);
             myIntent.putExtra("name", name);
             switch(i){
@@ -96,12 +98,12 @@ public class Alarm {
             alarmManager = (AlarmManager)a.getSystemService(Context.ALARM_SERVICE);
             Intent myIntent = new Intent(a.getApplicationContext(), AlarmReceiver.class);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(a.getApplicationContext(), 0, myIntent, 0);
-            active = true;
             Calendar calendar = Calendar.getInstance();
             int tempHour = hour;
             if(ampm == 1)tempHour += 12;
             calendar.set(Calendar.HOUR_OF_DAY, tempHour);
             calendar.set(Calendar.MINUTE, minute);
+            calendar.set(Calendar.SECOND, 0);
             if(System.currentTimeMillis() > calendar.getTimeInMillis()) calendar.add(Calendar.DATE, 1);
             myIntent.putExtra("name", name);
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
